@@ -1,33 +1,41 @@
 from Post import Post
 
+all_posts_archive = []
 options = ["new","username","print","quit","remove"]
 
-def prompt():
+def prompt_action():
+    """asks the user which action they'd like to carry out"""
     return input(f"please select an action: {', '.join(options)}\n")
-def handleNew():
-    pass
-def handleUsername():
-    pass
-def handlePrint():
-    pass
-def handlequit():
-    pass
-def handleRemove():
-    pass
 
-all_posts_archive = []
+def new_post(user):
+    """Constructs Post and adds it to the archive."""
+    all_posts_archive.append(
+        Post(user, input("Please enter message to post: "))
+    )
 
-user_input = prompt()
-while user_input != "quit":
-    if user_input not in options:
+def prompt_username():
+    return input("What's your username: ")
+
+def print_posts():
+    for p in all_posts_archive:
+        print(p)
+
+def remove_post():
+    raise NotImplementedError
+
+
+username = prompt_username()
+action_requested = prompt_action()
+while action_requested != "quit":
+    if action_requested not in options:
         print("Not an option, please try again...")
-    elif user_input == "new":
-        handleNew()
-    elif user_input == "username":
-        handleUsername()
-    elif user_input == "print":
-        handlePrint()        
-    elif user_input == "remove":
-        handleRemove()
-    user_input = prompt()
-exit(0)
+    elif action_requested == "username":
+        username = prompt_username()
+    elif action_requested == "new":
+        new_post(username)
+    elif action_requested == "print":
+        print_posts()        
+    elif action_requested == "remove":
+        remove_post()
+    action_requested = prompt_action()
+# naturally exit
